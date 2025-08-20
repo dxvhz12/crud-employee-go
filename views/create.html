@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form Create Karyawan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/employee">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between mb-3">
+            <h3><u>Create Karyawan</u></h3>
+        </div>
+
+        <form action="/employee/create" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama Karyawan</label>
+                <input type="text" class="form-control" id="name" placeholder="Contoh: Udin" name="nama">
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Alamat Karyawan</label>
+                <textarea class="form-control" id="address" rows="3" name="address"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="jabatan" class="form-label">Jabatan</label>
+                <select class="form-select" id="jabatan" name="jabatan">
+                    <option value="">-- Pilih Jabatan --</option>
+                    <option value="manager">Manager</option>
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                    <option value="hrd">HRD</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="gaji" class="form-label">Gaji</label>
+                <input type="text" class="form-control" id="gaji" placeholder="Masukkan gaji" name="gaji">
+            </div>
+
+            <div class="mb-3">
+                <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
+                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+    <script>
+        const gajiInput = document.getElementById("gaji");
+
+        // Format input saat mengetik
+        gajiInput.addEventListener("input", function(e) {
+            let value = e.target.value.replace(/\D/g, ""); // hapus semua non-angka
+            e.target.value = new Intl.NumberFormat("id-ID").format(value);
+        });
+
+        // Hilangkan titik sebelum submit agar backend dapat angka bersih
+        gajiInput.form.addEventListener("submit", function() {
+            gajiInput.value = gajiInput.value.replace(/\./g, "");
+        });
+    </script>
+</body>
+
+</html>
