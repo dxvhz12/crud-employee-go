@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CRUD EMPLOYEE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-5">
+        <div class="d-flex justify-content-between">
+            <h3>List Employee</h3>
+            <a href="/employee/create" class="btn btn-sm btn-primary">Tambah Data</a>
+        </div>
+        <table class="table my-3">
+            <thead>
+                <tr>
+                    <td>Nama</td>
+                    <td>Alamat</td>
+                    <td>Jabatan</td>
+                    <td>Gaji</td>
+                    <td>Tanggal Masuk</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range $index, $employee := .employees }}
+                <tr>
+                    <td>{{ $employee.Nama }}</td>
+                    <td>{{ $employee.Alamat }}</td>
+                    <td>{{ $employee.Jabatan }}</td>
+                    <td>{{ printf "%.0f" $employee.Gaji }}</td>
+                    <td>{{ $employee.TanggalMasuk }}</td>
+                    <td>
+                        <a href="/employee/update?id={{ $employee.Id }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/employee/delete?id={{ $employee.Id }}" class="btn btn-danger btn-sm" 
+                            onclick="return confirm('Apakah Anda yakin ingin menghapus karyawan ini?');">Delete</a>
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
