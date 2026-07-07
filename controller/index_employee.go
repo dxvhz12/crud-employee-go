@@ -50,7 +50,7 @@ func IndexEmployeeController(db *sql.DB) func(w http.ResponseWriter, r *http.Req
 
 		fp := filepath.Join("views", "index.html")
 
-		tmpl, err := template.ParseFiles(fp)
+		tmpl, err := template.New("index.html").Funcs(funcMap).ParseFiles(fp)
 		if err != nil {
 			w.Write([]byte(err.Error()))
 			w.WriteHeader(http.StatusInternalServerError)

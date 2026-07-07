@@ -1,82 +1,310 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Form Update Karyawan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #EDF0E6;
+            --card: #F8F9F3;
+            --ink: #1E2A2E;
+            --ink-soft: #57685F;
+            --teal: #256D5A;
+            --teal-dark: #17493B;
+            --amber: #C98A2C;
+            --brick: #9C3B2C;
+            --line: #D7DBC9;
+            --line-strong: #B9C2A9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            background-image: linear-gradient(var(--line) 1px, transparent 1px);
+            background-size: 100% 32px;
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header.tabs {
+            background: var(--ink);
+            padding: 0 24px;
+        }
+
+        .tab-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .brand { display: flex; align-items: baseline; gap: 10px; }
+
+        .brand .mark {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: var(--amber);
+            border: 1px solid var(--amber);
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .brand .name {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 19px;
+            color: #F8F9F3;
+        }
+
+        .back-link {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            color: #9FB0A8;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #F8F9F3; }
+
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 90px;
+        }
+
+        .page-head { margin-bottom: 28px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+        .page-head .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin: 0 0 6px;
+        }
+
+        .page-head h1 {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 30px;
+            margin: 0;
+            color: var(--ink);
+        }
+
+        .id-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--ink-soft);
+            border: 1px solid var(--line-strong);
+            padding: 5px 10px;
+            border-radius: 2px;
+            background: var(--card);
+        }
+
+        .card-file {
+            position: relative;
+            background: var(--card);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            padding: 44px 36px 36px;
+        }
+
+        .card-file .perf {
+            position: absolute;
+            top: 13px; left: 28px; right: 28px;
+            height: 0;
+            border-top: 2px dashed var(--line-strong);
+        }
+
+        .punch {
+            position: absolute;
+            top: 6px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+        }
+        .punch.p1 { left: 30px; }
+        .punch.p2 { left: 54px; }
+
+        .field { margin-bottom: 26px; }
+
+        .field label {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 9px;
+        }
+
+        .field input[type="text"],
+        .field input[type="date"],
+        .field textarea,
+        .field select {
+            width: 100%;
+            border: none;
+            border-bottom: 1.5px solid var(--line-strong);
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--ink);
+            padding: 6px 2px 10px;
+            outline: none;
+            transition: border-color 0.15s ease;
+            border-radius: 0;
+            appearance: none;
+        }
+
+        .field textarea { resize: vertical; min-height: 64px; font-family: 'Inter', sans-serif; }
+
+        .field input::placeholder, .field textarea::placeholder { color: #A6B0A1; }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            border-bottom-color: var(--teal);
+            border-bottom-width: 2px;
+        }
+
+        .field select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2357685F' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+            padding-right: 20px;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13.5px;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 3px;
+            border: 1.5px solid var(--teal);
+            cursor: pointer;
+            background: transparent;
+            color: var(--teal-dark);
+            transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+        }
+        .btn:hover { background: var(--teal); color: #F8F9F3; transform: translateY(-1px); }
+
+        .btn-ghost {
+            border-color: var(--line-strong);
+            color: var(--ink-soft);
+        }
+        .btn-ghost:hover { background: transparent; color: var(--ink); border-color: var(--ink-soft); }
+
+        @media (max-width: 560px) {
+            .row-2 { grid-template-columns: 1fr; }
+            .card-file { padding: 40px 22px 28px; }
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/employee">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <header class="tabs">
+        <div class="tab-inner">
+            <div class="brand">
+                <span class="mark">HR</span>
+                <span class="name">Employee Ledger</span>
+            </div>
+            <a href="/employee" class="back-link">&larr; Kembali ke List</a>
         </div>
-    </nav>
-    <div class="container my-5">
-        <div class="d-flex justify-content-between mb-3">
-            <h3><u>Update Karyawan</u></h3>
+    </header>
+
+    <main>
+        <div class="page-head">
+            <div>
+                <p class="eyebrow">Formulir Pendataan</p>
+                <h1>Update Karyawan</h1>
+            </div>
+            <span class="id-tag">ID #{{ .employee.Id }}</span>
         </div>
 
-        <form action="/employee/update?id={{ .employee.Id }}" method="post">
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama Karyawan</label>
-                <input type="text" class="form-control" id="name" placeholder="Contoh: Udin" name="nama" value="{{ .employee.Nama }}">
-            </div>
+        <div class="card-file">
+            <span class="punch p1"></span>
+            <span class="punch p2"></span>
+            <div class="perf"></div>
 
-            <div class="mb-3">
-                <label for="address" class="form-label">Alamat Karyawan</label>
-                <textarea class="form-control" id="address" rows="3" name="address">{{ .employee.Alamat }}</textarea>
-            </div>
+            <form action="/employee/update?id={{ .employee.Id }}" method="post">
+                <div class="field">
+                    <label for="name">Nama Karyawan</label>
+                    <input type="text" id="name" placeholder="Contoh: Udin" name="nama" value="{{ .employee.Nama }}" required>
+                </div>
 
-            <div class="mb-3">
-                <label for="jabatan" class="form-label">Jabatan</label>
-                <select class="form-select" id="jabatan" name="jabatan">
-                    <option value="">-- Pilih Jabatan --</option>
-                    <option value="manager" {{ if eq .employee.Jabatan "manager" }}selected{{ end }}>Manager</option>
-                    <option value="staff" {{ if eq .employee.Jabatan "staff" }}selected{{ end }}>Staff</option>
-                    <option value="admin" {{ if eq .employee.Jabatan "admin" }}selected{{ end }}>Admin</option>
-                    <option value="hrd" {{ if eq .employee.Jabatan "hrd" }}selected{{ end }}>HRD</option>
-                </select>
-            </div>
+                <div class="field">
+                    <label for="address">Alamat Karyawan</label>
+                    <textarea id="address" rows="3" name="address">{{ .employee.Alamat }}</textarea>
+                </div>
 
-            <div class="mb-3">
-                <label for="gaji" class="form-label">Gaji</label>
-                <input type="text" class="form-control" id="gaji" placeholder="Masukkan gaji" name="gaji" 
-                    value="{{ printf "%.0f" .employee.Gaji }}">
-            </div>
+                <div class="row-2">
+                    <div class="field">
+                        <label for="jabatan">Jabatan</label>
+                        <select id="jabatan" name="jabatan" required>
+                            <option value="">-- Pilih Jabatan --</option>
+                            <option value="manager" {{ if eq .employee.Jabatan "manager" }}selected{{ end }}>Manager</option>
+                            <option value="staff" {{ if eq .employee.Jabatan "staff" }}selected{{ end }}>Staff</option>
+                            <option value="admin" {{ if eq .employee.Jabatan "admin" }}selected{{ end }}>Admin</option>
+                            <option value="hrd" {{ if eq .employee.Jabatan "hrd" }}selected{{ end }}>HRD</option>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
-                <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" 
-                    value="{{ .employee.TanggalMasuk }}">
-            </div>
+                    <div class="field">
+                        <label for="gaji">Gaji</label>
+                        <input type="text" id="gaji" placeholder="Masukkan gaji" name="gaji" required
+                            value="{{ rupiah .employee.Gaji }}">
+                    </div>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
-        </form>
-    </div>
+                <div class="field">
+                    <label for="tanggal_masuk">Tanggal Masuk</label>
+                    <input type="date" id="tanggal_masuk" name="tanggal_masuk" value="{{ .employee.TanggalMasuk }}">
+                </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
+                <div class="actions">
+                    <a href="/employee" class="btn btn-ghost">Batal</a>
+                    <button type="submit" class="btn">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
     <script>
         const gajiInput = document.getElementById("gaji");
 
-        // Format input saat mengetik
-        gajiInput.addEventListener("input", function(e) {
-            let value = e.target.value.replace(/\D/g, ""); // hapus semua non-angka
+        gajiInput.addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, "");
             e.target.value = new Intl.NumberFormat("id-ID").format(value);
         });
 
-        // Hilangkan titik sebelum submit agar backend dapat angka bersih
-        gajiInput.form.addEventListener("submit", function() {
+        gajiInput.form.addEventListener("submit", function () {
             gajiInput.value = gajiInput.value.replace(/\./g, "");
         });
     </script>

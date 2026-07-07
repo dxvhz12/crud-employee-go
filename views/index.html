@@ -1,70 +1,363 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>List Employee</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #EDF0E6;
+            --card: #F8F9F3;
+            --ink: #1E2A2E;
+            --ink-soft: #57685F;
+            --teal: #256D5A;
+            --teal-dark: #17493B;
+            --amber: #C98A2C;
+            --brick: #9C3B2C;
+            --line: #D7DBC9;
+            --line-strong: #B9C2A9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px);
+            background-size: 100% 32px;
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header.tabs {
+            background: var(--ink);
+            padding: 0 24px;
+        }
+
+        .tab-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .brand .mark {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: var(--amber);
+            border: 1px solid var(--amber);
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .brand .name {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 19px;
+            color: #F8F9F3;
+        }
+
+        .stamp-date {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: #9FB0A8;
+            letter-spacing: 0.03em;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .page-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 28px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .page-head .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            margin: 0 0 6px;
+        }
+
+        .page-head h1 {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 32px;
+            margin: 0;
+            color: var(--ink);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13.5px;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 3px;
+            border: 1.5px solid transparent;
+            cursor: pointer;
+            transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+        }
+
+        .btn-primary {
+            background: var(--teal);
+            color: #F8F9F3;
+        }
+        .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+        .btn-stamp {
+            background: transparent;
+            border: 1.5px solid var(--line-strong);
+            color: var(--ink-soft);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 6px 12px;
+        }
+        .btn-stamp.edit:hover { border-color: var(--teal); color: var(--teal-dark); transform: rotate(-1deg); }
+        .btn-stamp.del:hover { border-color: var(--brick); color: var(--brick); transform: rotate(1deg); }
+
+        .card-file {
+            position: relative;
+            background: var(--card);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            box-shadow: 0 1px 0 rgba(30,42,46,0.03);
+            overflow: hidden;
+        }
+
+        .card-file .perf {
+            position: absolute;
+            top: 13px; left: 28px; right: 28px;
+            height: 0;
+            border-top: 2px dashed var(--line-strong);
+        }
+
+        .punch {
+            position: absolute;
+            top: 6px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+        }
+        .punch.p1 { left: 30px; }
+        .punch.p2 { left: 54px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 26px;
+        }
+
+        thead th {
+            text-align: left;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            font-weight: 500;
+            padding: 0 20px 14px;
+            border-bottom: 1px solid var(--line-strong);
+        }
+
+        tbody td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--line);
+            font-size: 14.5px;
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            border-left: 3px solid transparent;
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            border-left-color: var(--teal);
+            background: rgba(37, 109, 90, 0.045);
+        }
+
+        .name-cell {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .addr-cell {
+            color: var(--ink-soft);
+            max-width: 220px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #7A5417;
+            background: rgba(201, 138, 44, 0.16);
+            border: 1px solid rgba(201, 138, 44, 0.45);
+            padding: 3px 9px;
+            border-radius: 2px;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13.5px;
+            color: var(--ink-soft);
+        }
+
+        .gaji-cell {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13.5px;
+            color: var(--ink);
+            text-align: right;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .empty-state {
+            padding: 64px 20px 72px;
+            text-align: center;
+        }
+
+        .empty-state .icon {
+            font-family: 'Fraunces', serif;
+            font-size: 40px;
+            color: var(--line-strong);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--ink-soft);
+            font-size: 14.5px;
+            margin: 0 0 20px;
+        }
+
+        footer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-soft);
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 640px) {
+            .card-file { overflow-x: auto; }
+            table { min-width: 640px; }
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">CRUD EMPLOYEE</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+    <header class="tabs">
+        <div class="tab-inner">
+            <div class="brand">
+                <span class="mark">HR</span>
+                <span class="name">Employee Ledger</span>
             </div>
+            <span class="stamp-date" id="stampDate"></span>
         </div>
-    </nav>
-    <div class="container my-5">
-        <div class="d-flex justify-content-between">
-            <h3>List Employee</h3>
-            <a href="/employee/create" class="btn btn-sm btn-primary">Tambah Data</a>
-        </div>
-        <table class="table my-3">
-            <thead>
-                <tr>
-                    <td>Nama</td>
-                    <td>Alamat</td>
-                    <td>Jabatan</td>
-                    <td>Gaji</td>
-                    <td>Tanggal Masuk</td>
-                    <td>Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                {{ range $index, $employee := .employees }}
-                <tr>
-                    <td>{{ $employee.Nama }}</td>
-                    <td>{{ $employee.Alamat }}</td>
-                    <td>{{ $employee.Jabatan }}</td>
-                    <td>{{ printf "%.0f" $employee.Gaji }}</td>
-                    <td>{{ $employee.TanggalMasuk }}</td>
-                    <td>
-                        <a href="/employee/update?id={{ $employee.Id }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="/employee/delete?id={{ $employee.Id }}" class="btn btn-danger btn-sm" 
-                            onclick="return confirm('Apakah Anda yakin ingin menghapus karyawan ini?');">Delete</a>
-                    </td>
-                </tr>
-                {{ end }}
-            </tbody>
-        </table>
-    </div>
+    </header>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    <main>
+        <div class="page-head">
+            <div>
+                <p class="eyebrow">Arsip Kepegawaian</p>
+                <h1>List Employee</h1>
+            </div>
+            <a href="/employee/create" class="btn btn-primary">+ Tambah Karyawan</a>
+        </div>
+
+        <div class="card-file">
+            <span class="punch p1"></span>
+            <span class="punch p2"></span>
+            <div class="perf"></div>
+
+            {{ if not .employees }}
+            <div class="empty-state">
+                <div class="icon">&mdash;</div>
+                <p>Belum ada data karyawan yang tercatat.</p>
+                <a href="/employee/create" class="btn btn-primary">+ Tambah Karyawan Pertama</a>
+            </div>
+            {{ else }}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Jabatan</th>
+                        <th style="text-align:right;">Gaji</th>
+                        <th>Tanggal Masuk</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range $index, $employee := .employees }}
+                    <tr>
+                        <td class="name-cell">{{ $employee.Nama }}</td>
+                        <td class="addr-cell">{{ $employee.Alamat }}</td>
+                        <td><span class="badge">{{ $employee.Jabatan }}</span></td>
+                        <td class="gaji-cell">Rp {{ rupiah $employee.Gaji }}</td>
+                        <td class="mono">{{ tanggalID $employee.TanggalMasuk }}</td>
+                        <td>
+                            <div class="actions-cell">
+                                <a href="/employee/update?id={{ $employee.Id }}" class="btn-stamp edit">Edit</a>
+                                <a href="/employee/delete?id={{ $employee.Id }}" class="btn-stamp del"
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus karyawan ini?');">Hapus</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+            {{ end }}
+        </div>
+    </main>
+
+    <footer>Dicetak otomatis dari sistem — data bersifat internal.</footer>
+
+    <script>
+        const el = document.getElementById('stampDate');
+        const today = new Date();
+        const opts = { day: '2-digit', month: 'short', year: 'numeric' };
+        el.textContent = 'Per ' + today.toLocaleDateString('id-ID', opts);
     </script>
 </body>
 

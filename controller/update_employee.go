@@ -54,7 +54,7 @@ func UpdateEmployeeController(db *sql.DB) func(w http.ResponseWriter, r *http.Re
 
 			fp := filepath.Join("views", "update.html")
 
-			tmpl, err := template.ParseFiles(fp)
+			tmpl, err := template.New("update.html").Funcs(funcMap).ParseFiles(fp)
 			if err != nil {
 				w.Write([]byte(err.Error()))
 				w.WriteHeader(http.StatusInternalServerError)
