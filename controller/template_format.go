@@ -9,4 +9,6 @@ import (
 var funcMap = template.FuncMap{
 	"rupiah":    helper.FormatRupiah,
 	"tanggalID": helper.FormatTanggal,
+	"initial":   helper.Initial,
+	"dateISO":   helper.FormatDateISO,
 }

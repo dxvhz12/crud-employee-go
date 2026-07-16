@@ -46,3 +46,35 @@ func FormatTanggal(tanggal string) string {
 
 	return tanggal // fallback kalau semua format gagal di-parse
 }
+
+// buat inisial avatar kalau foto belum ada
+func Initial(name string) string {
+	if len(name) == 0 {
+		return "?"
+	}
+	r := []rune(name)
+	return strings.ToUpper(string(r[0]))
+}
+
+// FormatDateISO: berapapun format tanggal masuknya, keluarkan "2006-01-02"
+// khusus buat dipakai di value <input type="date">
+func FormatDateISO(raw string) string {
+	if raw == "" {
+		return ""
+	}
+
+	layouts := []string{
+		"2006-01-02T15:04:05Z",
+		"2006-01-02T15:04:05Z07:00",
+		"2006-01-02 15:04:05",
+		"2006-01-02",
+	}
+
+	for _, layout := range layouts {
+		if t, err := time.Parse(layout, raw); err == nil {
+			return t.Format("2006-01-02")
+		}
+	}
+
+	return raw
+}

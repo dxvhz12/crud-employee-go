@@ -16,4 +16,7 @@ func MapRoutes(server *http.ServeMux, db *sql.DB) {
 	server.HandleFunc("/employee/delete", controller.DeleteEmployeeController(db))
 	server.HandleFunc("/api/employees", middleware.RequireApiKey(controller.GetAllEmployeesAPI(db)))
 	server.HandleFunc("/api/employees-detail", middleware.RequireApiKey(controller.GetEmployeeByIdAPI(db)))
+	
+	// serve file foto yang diupload
+	server.Handle("/uploads/", http.StripPrefix("/uploads/", http.FileServer(http.Dir("public/uploads"))))
 }
