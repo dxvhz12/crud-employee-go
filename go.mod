@@ -3,6 +3,7 @@ module github.com/dxvhz12/crud-employee-go
 go 1.25.0
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.3.1 // Library JWT (JSON Web Token).
 	github.com/jackc/pgx/v5 v5.10.0 // Driver PostgreSQL modern.
 	github.com/joho/godotenv v1.5.1 // Mirip Laravel .env.
 )

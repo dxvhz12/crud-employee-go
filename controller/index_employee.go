@@ -8,15 +8,15 @@ import (
 )
 
 type Employee struct {
-	Id            string
-	Nama          string
-	Alamat        string
-	Jabatan       string
-	Gaji          float64
-	TanggalMasuk  string
-	TanggalKeluar string
-	Foto          string
-	Status        string
+	Id           string  `json:"id"`
+	Nama         string  `json:"nama"`
+	Foto         string  `json:"foto"`
+	Alamat       string  `json:"alamat"`
+	Jabatan      string  `json:"jabatan"`
+	Gaji         float64 `json:"gaji"`
+	TanggalMasuk string  `json:"tanggal_masuk"`
+	TanggalKeluar string `json:"tanggal_keluar"`
+	Status       string  `json:"status"`
 }
 
 func IndexEmployeeController(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
